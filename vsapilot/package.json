@@ -15,7 +15,7 @@
     "commands": [
       {
         "command": "vsapilot.helloWorld",
-        "title": "Hello World"
+        "title": "Visa UI Chatbot"
       }
     ]
   },
