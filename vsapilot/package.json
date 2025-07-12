@@ -14,7 +14,7 @@
   "contributes": {
     "commands": [
       {
-        "command": "vsapilot.helloWorld",
+        "command": "vsapilot.startvsa",
         "title": "Visa UI Chatbot"
       }
     ]
