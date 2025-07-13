@@ -149,6 +149,7 @@ export function getWindow(): string {
   </div>
 
   <script>
+    import {DEFAULT_PROMPT} from './defaultPrompt';
     window.addEventListener('message', event => {
           const msg = event.data;
           if (msg.type === 'botReply') {
@@ -156,8 +157,8 @@ export function getWindow(): string {
           }
         });
     window.addEventListener('DOMContentLoaded', () => {
-      
       const textarea = document.getElementById('chat-input');
+      textarea.defaultValue = DEFAULT_PROMPT;
       const submitBtn = document.getElementById('submit-btn');
       const chatOutput = document.getElementById('chat-output');
       const mock = false;
