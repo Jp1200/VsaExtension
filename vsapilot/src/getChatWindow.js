@@ -62,10 +62,11 @@ function getWindow() {
       overflow-y: auto;
       line-height: 1.4;
     }
-	textarea:focus{
-		outline:none;
-		border:none;
-	}
+    textarea:focus {
+      outline: none;
+      border: none;
+    }
+
     .input-actions {
       display: flex;
       justify-content: flex-end;
@@ -92,73 +93,76 @@ function getWindow() {
       background-color: #d6d4d4ff;
       cursor: not-allowed;
     }
+
     .chat-output {
-  flex: 1;
-  overflow-y: auto;
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  border-bottom: 1px solid #ddd;
-}
+      flex: 1;
+      overflow-y: auto;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      border-bottom: 1px solid #ddd;
+    }
 
-.chat-bubble {
-  max-width: 75%;
-  padding: 0.75rem 1rem;
-  border-radius: 0.75rem;
-  line-height: 1.4;
-  white-space: pre-wrap;
-}
+    .chat-bubble {
+      max-width: 75%;
+      padding: 0.75rem 1rem;
+      border-radius: 0.75rem;
+      line-height: 1.4;
+      white-space: pre-wrap;
+    }
 
-.user {
-  align-self: flex-end;
-  background-color: #dbeafe;
-  color: #1e40af;
-}
+    .user {
+      align-self: flex-end;
+      background-color: #dbeafe;
+      color: #1e40af;
+    }
 
-.assistant {
-  align-self: flex-start;
-  background-color: #e5e7eb;
-  color: #111827;
-}
-    textarea::-webkit-scrollbar-thumb { 
+    .assistant {
+      align-self: flex-start;
+      background-color: #e5e7eb;
+      color: #111827;
+    }
+
+    textarea::-webkit-scrollbar-thumb {
       background-color: rgba(120, 14, 14, 0.3) !important;
       border-radius: 5px !important;
       border: 2px solid #f0f0f0 !important;
-}
+    }
   </style>
 </head>
 <body>
 
   <div class="chat-container">
-    <div id="chat-output" class="chat-output">
-      
-    </div>
+    <div id="chat-output" class="chat-output"></div>
     <div class="input-wrapper">
       <div class="input-box">
         <div class="textarea-container">
-        
-          <textarea 
-            id="chat-input" 
-            placeholder="Send a message..." 
+          <textarea
+            id="chat-input"
+            placeholder="Send a message..."
             rows="1"
-            oninput="autoResize(this)"
           ></textarea>
-          
         </div>
         <div class="input-actions">
-          <button id="submit-btn" onclick="handleSubmit()">></button>
+          <button id="submit-btn">></button>
         </div>
       </div>
     </div>
   </div>
 
   <script>
-    function autoResize(textarea) {
-      textarea.style.height = 'auto';
-      textarea.style.height = textarea.scrollHeight + 'px';
-    }
-    function generateMockResponse(userMessage) {
+    window.addEventListener('DOMContentLoaded', () => {
+      const textarea = document.getElementById('chat-input');
+      const submitBtn = document.getElementById('submit-btn');
+      const chatOutput = document.getElementById('chat-output');
+
+      function autoResize() {
+        textarea.style.height = 'auto';
+        textarea.style.height = textarea.scrollHeight + 'px';
+      }
+
+     function generateMockResponse(userMessage) {
       return {
         id: "msg_" + Math.floor(Math.random() * 10000),
         role: "assistant",
@@ -166,35 +170,38 @@ function getWindow() {
         created: Math.floor(Date.now() / 1000)
       };
     }
-     function appendMessage(content, role) {
-      const container = document.getElementById("chat-output");
-      const bubble = document.createElement("div");
-      bubble.className = "chat-bubble " + role;
-      bubble.textContent = content;
-      container.appendChild(bubble);
-      container.scrollTop = container.scrollHeight;
-    }
-    function handleSubmit() {
-      const input = document.getElementById('chat-input');
-      const message = input.value.trim();
-      if(!message) return;
-      appendMessage(message, "user");
-      const response = generateMockResponse(message);
-      setTimeout(() => {
-        appendMessage(response.content, "assistant");
-      }, 600);
 
-      console.log('Submitted:', message);
-      input.value = '';
-      autoResize(input);
-    
-    }
 
+      function appendMessage(content, role) {
+        const bubble = document.createElement('div');
+        bubble.className = 'chat-bubble ' + role;
+        bubble.textContent = content;
+        chatOutput.appendChild(bubble);
+        chatOutput.scrollTop = chatOutput.scrollHeight;
+      }
+
+      function handleSubmit() {
+        console.log("button pressed")
+        const message = textarea.value.trim();
+        if (!message) return;
+        appendMessage(message, 'user');
+        const response = generateMockResponse(message);
+        setTimeout(() => {
+          appendMessage(response.content, 'assistant');
+        }, 600);
+        textarea.value = '';
+        autoResize();
+      }
+
+      textarea.addEventListener('input', autoResize);
+      submitBtn.addEventListener('click', handleSubmit);
+
+      autoResize();
+        });
   </script>
 
 </body>
 </html>
-
-	`;
+  `;
 }
 //# sourceMappingURL=getChatWindow.js.map
