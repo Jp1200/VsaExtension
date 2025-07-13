@@ -44,6 +44,7 @@ const getChatWindow_1 = require("./getChatWindow");
 function activate(context) {
     const disposable = vscode.commands.registerCommand('vsapilot.startvsa', () => {
         const panel = vscode.window.createWebviewPanel('Vsapilot', 'Visa UI Bot Chat', vscode.ViewColumn.One, { enableScripts: true });
+        console.log((0, getChatWindow_1.getWindow)());
         panel.webview.html = (0, getChatWindow_1.getWindow)();
     });
     context.subscriptions.push(disposable);

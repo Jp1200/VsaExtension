@@ -92,6 +92,35 @@ function getWindow() {
       background-color: #d6d4d4ff;
       cursor: not-allowed;
     }
+    .chat-output {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  border-bottom: 1px solid #ddd;
+}
+
+.chat-bubble {
+  max-width: 75%;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  line-height: 1.4;
+  white-space: pre-wrap;
+}
+
+.user {
+  align-self: flex-end;
+  background-color: #dbeafe;
+  color: #1e40af;
+}
+
+.assistant {
+  align-self: flex-start;
+  background-color: #e5e7eb;
+  color: #111827;
+}
     textarea::-webkit-scrollbar-thumb { 
       background-color: rgba(120, 14, 14, 0.3) !important;
       border-radius: 5px !important;
@@ -105,7 +134,6 @@ function getWindow() {
     <div id="chat-output" class="chat-output">
       
     </div>
-
     <div class="input-wrapper">
       <div class="input-box">
         <div class="textarea-container">

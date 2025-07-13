@@ -14,6 +14,7 @@ export function activate(context: vscode.ExtensionContext) {
 			vscode.ViewColumn.One,
 			{enableScripts: true}
 		);
+		console.log(getWindow());
 		panel.webview.html = getWindow();
 	});
 
