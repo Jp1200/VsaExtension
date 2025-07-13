@@ -149,11 +149,18 @@ export function getWindow(): string {
   </div>
 
   <script>
+    window.addEventListener('message', event => {
+          const msg = event.data;
+          if (msg.type === 'botReply') {
+            appendMessage(msg.payload, 'assistant');
+          }
+        });
     window.addEventListener('DOMContentLoaded', () => {
+      
       const textarea = document.getElementById('chat-input');
       const submitBtn = document.getElementById('submit-btn');
       const chatOutput = document.getElementById('chat-output');
-
+      const mock = false;
       function autoResize() {
         textarea.style.height = 'auto';
         textarea.style.height = textarea.scrollHeight + 'px';
@@ -180,12 +187,21 @@ export function getWindow(): string {
       function handleSubmit() {
         console.log("button pressed")
         const message = textarea.value.trim();
+        
         if (!message) return;
+        
         appendMessage(message, 'user');
-        const response = generateMockResponse(message);
-        setTimeout(() => {
-          appendMessage(response.content, 'assistant');
-        }, 600);
+        vscode.postMessage({
+          type:'userMessage',
+          payload: message
+        });
+        if(mock){
+           const response = generateMockResponse(message);
+           setTimeout(() => {
+           appendMessage(response.content, 'assistant');
+          }, 600);
+        }
+       
         textarea.value = '';
         autoResize();
       }
