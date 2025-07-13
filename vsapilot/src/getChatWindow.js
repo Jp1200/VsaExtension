@@ -1,6 +1,8 @@
-
-export function getWindow(): string {
-	return /*html*/`
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.getWindow = getWindow;
+function getWindow() {
+    return /*html*/ `
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -167,3 +169,4 @@ export function getWindow(): string {
 
 	`;
 }
+//# sourceMappingURL=getChatWindow.js.map
