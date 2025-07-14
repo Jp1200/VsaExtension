@@ -149,7 +149,17 @@ export function getWindow(): string {
   </div>
 
   <script>
-    import {DEFAULT_PROMPT} from './defaultPrompt';
+    const vscode = acquireVsCodeApi();
+
+    function appendMessage(content, role) {
+        const chatOutput = document.getElementById('chat-output');
+        const bubble = document.createElement('div');
+        bubble.className = 'chat-bubble ' + role;
+        bubble.textContent = content;
+        chatOutput.appendChild(bubble);
+        chatOutput.scrollTop = chatOutput.scrollHeight;
+      }
+
     window.addEventListener('message', event => {
           const msg = event.data;
           if (msg.type === 'botReply') {
@@ -158,9 +168,9 @@ export function getWindow(): string {
         });
     window.addEventListener('DOMContentLoaded', () => {
       const textarea = document.getElementById('chat-input');
-      textarea.defaultValue = DEFAULT_PROMPT;
+      const defaultChatValue = 'Using only the UI Components found at this url: "https://design.visa.com/components/", create any new content strictly with the library of UI components at that url. When asked to give references to UI components make a list of components used for the final product.';
+      textarea.defaultValue = defaultChatValue
       const submitBtn = document.getElementById('submit-btn');
-      const chatOutput = document.getElementById('chat-output');
       const mock = false;
       function autoResize() {
         textarea.style.height = 'auto';
@@ -175,16 +185,6 @@ export function getWindow(): string {
         created: Math.floor(Date.now() / 1000)
       };
     }
-
-
-      function appendMessage(content, role) {
-        const bubble = document.createElement('div');
-        bubble.className = 'chat-bubble ' + role;
-        bubble.textContent = content;
-        chatOutput.appendChild(bubble);
-        chatOutput.scrollTop = chatOutput.scrollHeight;
-      }
-
       function handleSubmit() {
         console.log("button pressed")
         const message = textarea.value.trim();
