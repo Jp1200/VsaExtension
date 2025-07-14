@@ -62,7 +62,7 @@ async function getAIResponse(userMessage: string, context: vscode.ExtensionConte
 			]
 		}),	
 	});
-	const data = await response.json();
+	const data: any = await response.json();
 
 	if (data.choices && data.choices.length > 0 ){
 		return data.choices[0].message.content;

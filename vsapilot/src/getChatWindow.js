@@ -152,11 +152,19 @@ function getWindow() {
   </div>
 
   <script>
+    import {DEFAULT_PROMPT} from './defaultPrompt';
+    window.addEventListener('message', event => {
+          const msg = event.data;
+          if (msg.type === 'botReply') {
+            appendMessage(msg.payload, 'assistant');
+          }
+        });
     window.addEventListener('DOMContentLoaded', () => {
       const textarea = document.getElementById('chat-input');
+      textarea.defaultValue = DEFAULT_PROMPT;
       const submitBtn = document.getElementById('submit-btn');
       const chatOutput = document.getElementById('chat-output');
-
+      const mock = false;
       function autoResize() {
         textarea.style.height = 'auto';
         textarea.style.height = textarea.scrollHeight + 'px';
@@ -166,7 +174,7 @@ function getWindow() {
       return {
         id: "msg_" + Math.floor(Math.random() * 10000),
         role: "assistant",
-        content: "You said: \"" + userMessage + "\". Here's a thoughtful response from your AI assistant.",
+        content: "test",
         created: Math.floor(Date.now() / 1000)
       };
     }
@@ -183,12 +191,21 @@ function getWindow() {
       function handleSubmit() {
         console.log("button pressed")
         const message = textarea.value.trim();
+        
         if (!message) return;
+        
         appendMessage(message, 'user');
-        const response = generateMockResponse(message);
-        setTimeout(() => {
-          appendMessage(response.content, 'assistant');
-        }, 600);
+        vscode.postMessage({
+          type:'userMessage',
+          payload: message
+        });
+        if(mock){
+           const response = generateMockResponse(message);
+           setTimeout(() => {
+           appendMessage(response.content, 'assistant');
+          }, 600);
+        }
+       
         textarea.value = '';
         autoResize();
       }
