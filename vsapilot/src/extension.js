@@ -79,15 +79,23 @@ async function getAIResponse(userMessage, context) {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization:': `Bearer ${apiKey}`,
+            'Authorization': `Bearer ${apiKey}`,
+            'HTTP-Referer': 'http://localhost',
+            'X-Title': 'VSCode Extension'
         },
         body: JSON.stringify({
-            model: 'openai/gpt-3.5-turbo',
-            message: [
+            model: 'openai/gpt-3.5-turbo-0613',
+            messages: [
                 { role: 'user', content: userMessage }
             ]
         }),
     });
+    if (!response.ok) {
+        console.error('OpenRouter Error:', response.status);
+        const errorText = await response.text();
+        console.error(errorText);
+        return 'There was an error from OpenRouter';
+    }
     const data = await response.json();
     if (data.choices && data.choices.length > 0) {
         return data.choices[0].message.content;
