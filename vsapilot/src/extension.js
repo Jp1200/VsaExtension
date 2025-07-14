@@ -55,7 +55,10 @@ function activate(context) {
         }
     }));
     const disposable = vscode.commands.registerCommand('vsapilot.startvsa', () => {
-        const panel = vscode.window.createWebviewPanel('Vsapilot', 'Visa UI Bot Chat', vscode.ViewColumn.One, { enableScripts: true });
+        const panel = vscode.window.createWebviewPanel('Vsapilot', 'Visa UI Bot Chat', vscode.ViewColumn.One, {
+            enableScripts: true,
+            localResourceRoots: [vscode.Uri.joinPath(context.extensionUri, 'media')],
+        });
         panel.webview.onDidReceiveMessage(async (msg) => {
             if (msg.type === 'userMessage') {
                 const reply = await getAIResponse(msg.payload, context);
@@ -65,7 +68,7 @@ function activate(context) {
                 });
             }
         });
-        panel.webview.html = (0, getChatWindow_1.getWindow)();
+        panel.webview.html = (0, getChatWindow_1.getWindow)(panel.webview, context.extensionUri);
     });
     context.subscriptions.push(disposable);
 }

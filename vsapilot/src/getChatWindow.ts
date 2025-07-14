@@ -1,4 +1,6 @@
-export function getWindow(): string {
+import * as vscode from 'vscode';
+export function getWindow(webview: vscode.Webview, extensionUri: vscode.Uri): string {
+  const scriptUri = webview.asWebviewUri(vscode.Uri.joinPath(extensionUri, 'media', 'script.js'));
   return /*html*/ `
 <!DOCTYPE html>
 <html lang="en">
@@ -90,7 +92,15 @@ export function getWindow(): string {
       background-color: #d6d4d4ff;
       cursor: not-allowed;
     }
-
+    pre {
+      background-color: #f5f5f5;
+      padding: 0.75rem;
+      border-radius: 0.5rem;
+      overflow-x: auto;
+      font-family: monospace;
+      font-size: 0.9rem;
+      line-height: 1.4;
+  }
     .chat-output {
       flex: 1;
       overflow-y: auto;
@@ -147,72 +157,7 @@ export function getWindow(): string {
       </div>
     </div>
   </div>
-
-  <script>
-    const vscode = acquireVsCodeApi();
-
-    function appendMessage(content, role) {
-        const chatOutput = document.getElementById('chat-output');
-        const bubble = document.createElement('div');
-        bubble.className = 'chat-bubble ' + role;
-        bubble.textContent = content;
-        chatOutput.appendChild(bubble);
-        chatOutput.scrollTop = chatOutput.scrollHeight;
-      }
-
-    window.addEventListener('message', event => {
-          const msg = event.data;
-          if (msg.type === 'botReply') {
-            appendMessage(msg.payload, 'assistant');
-          }
-        });
-    window.addEventListener('DOMContentLoaded', () => {
-      const textarea = document.getElementById('chat-input');
-      const defaultChatValue = 'Using only the UI Components found at this url: "https://design.visa.com/components/", create any new content strictly with the library of UI components at that url. When asked to give references to UI components make a list of components used for the final product.';
-      textarea.defaultValue = defaultChatValue
-      const submitBtn = document.getElementById('submit-btn');
-      const mock = false;
-      function autoResize() {
-        textarea.style.height = 'auto';
-        textarea.style.height = textarea.scrollHeight + 'px';
-      }
-
-     function generateMockResponse(userMessage) {
-      return {
-        id: "msg_" + Math.floor(Math.random() * 10000),
-        role: "assistant",
-        content: "test",
-        created: Math.floor(Date.now() / 1000)
-      };
-    }
-      function handleSubmit() {
-        console.log("button pressed")
-        const message = textarea.value.trim();
-        
-        if (!message) return;
-        
-        appendMessage(message, 'user');
-        vscode.postMessage({
-          type:'userMessage',
-          payload: message
-        });
-        if(mock){
-           const response = generateMockResponse(message);
-           setTimeout(() => {
-           appendMessage(response.content, 'assistant');
-          }, 600);
-        }
-       
-        textarea.value = '';
-        autoResize();
-      }
-
-      textarea.addEventListener('input', autoResize);
-      submitBtn.addEventListener('click', handleSubmit);
-
-      autoResize();
-        });
-  </script>
+<script src="${scriptUri}"></script>
 
 </body>
 </html>

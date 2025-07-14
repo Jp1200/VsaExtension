@@ -9,14 +9,14 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(
 	vscode.commands.registerCommand('vsapilot.setApiKey', async () => {
 		const key = await vscode.window.showInputBox({
-		prompt: 'Enter your OpenRouter API key',
-		ignoreFocusOut: true,
-		password: true,
+			prompt: 'Enter your OpenRouter API key',
+			ignoreFocusOut: true,
+			password: true,
 		});
 
 		if (key) {
-		await context.secrets.store('openrouterApiKey', key);
-		vscode.window.showInformationMessage('API key saved securely.');
+			await context.secrets.store('openrouterApiKey', key);
+			vscode.window.showInformationMessage('API key saved securely.');
 		}
 	})
 	);
@@ -27,7 +27,10 @@ export function activate(context: vscode.ExtensionContext) {
 			'Vsapilot',
 			'Visa UI Bot Chat',
 			vscode.ViewColumn.One,
-			{enableScripts: true}
+			{
+				enableScripts: true,
+				localResourceRoots: [vscode.Uri.joinPath(context.extensionUri, 'media')],
+			}
 		);
 		panel.webview.onDidReceiveMessage(async (msg) => {
 			if (msg.type === 'userMessage') {
@@ -38,7 +41,7 @@ export function activate(context: vscode.ExtensionContext) {
 				});
 			}
 		});
-		panel.webview.html = getWindow();
+		panel.webview.html = getWindow(panel.webview, context.extensionUri);
 	});
 
 	context.subscriptions.push(disposable);
