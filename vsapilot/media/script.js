@@ -1,5 +1,27 @@
 const vscode = acquireVsCodeApi();
 
+  function appendMessage(content, role) {
+    const bubble = document.createElement('div');
+    const chatOutput = document.getElementById('chat-output');
+    bubble.className = 'chat-bubble ' + role;
+
+    // API returns code blocks with triple back ticks so detect when text starts and ends with it
+    if (content.startsWith("```") && content.endsWith("```")) {
+      const code = content.slice(3, -3).trim();
+      bubble.innerHTML = `<pre><code>${escapeHTML(code)}</code></pre>`;
+    } else {
+      bubble.textContent = content;
+    }
+
+    chatOutput.appendChild(bubble);
+    chatOutput.scrollTop = chatOutput.scrollHeight;
+  }
+
+  function escapeHTML(str) {
+    return str.replace(/&/g, '&amp;')
+              .replace(/</g, '&lt;')
+              .replace(/>/g, '&gt;');
+  }
 window.addEventListener('message', event => {
   const msg = event.data;
   if (msg.type === 'botReply') {
@@ -27,28 +49,6 @@ window.addEventListener('DOMContentLoaded', () => {
       content: "```js\nfunction greet() {\n  return 'Hello';\n}\n```",
       created: Math.floor(Date.now() / 1000)
     };
-  }
-
-  function appendMessage(content, role) {
-    const bubble = document.createElement('div');
-    bubble.className = 'chat-bubble ' + role;
-
-    // API returns code blocks with triple back ticks so detect when text starts and ends with it
-    if (content.startsWith("```") && content.endsWith("```")) {
-      const code = content.slice(3, -3).trim();
-      bubble.innerHTML = `<pre><code>${escapeHTML(code)}</code></pre>`;
-    } else {
-      bubble.textContent = content;
-    }
-
-    chatOutput.appendChild(bubble);
-    chatOutput.scrollTop = chatOutput.scrollHeight;
-  }
-
-  function escapeHTML(str) {
-    return str.replace(/&/g, '&amp;')
-              .replace(/</g, '&lt;')
-              .replace(/>/g, '&gt;');
   }
 
   function handleSubmit() {
