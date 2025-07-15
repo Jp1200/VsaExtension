@@ -43,6 +43,8 @@ function getWindow(webview, extensionUri) {
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+
   <title>Chat window</title>
   <style>
     html, body {
@@ -128,15 +130,6 @@ function getWindow(webview, extensionUri) {
       background-color: #d6d4d4ff;
       cursor: not-allowed;
     }
-    pre {
-      background-color: #f5f5f5;
-      padding: 0.75rem;
-      border-radius: 0.5rem;
-      overflow-x: auto;
-      font-family: monospace;
-      font-size: 0.9rem;
-      line-height: 1.4;
-  }
     .chat-output {
       flex: 1;
       overflow-y: auto;
@@ -146,13 +139,14 @@ function getWindow(webview, extensionUri) {
       gap: 1rem;
       border-bottom: 1px solid #ddd;
     }
-
     .chat-bubble {
       max-width: 75%;
       padding: 0.75rem 1rem;
       border-radius: 0.75rem;
       line-height: 1.4;
       white-space: pre-wrap;
+      margin-bottom: 1rem;
+      font-size: 1rem;
     }
 
     .user {
@@ -167,6 +161,52 @@ function getWindow(webview, extensionUri) {
       color: #111827;
     }
 
+    .code-block {
+      position: relative;
+      background-color: #f4f4f5;
+      border-radius: 8px;
+      overflow-x: auto;
+      margin-top: 0.5rem;
+    }
+
+    .code-block pre {
+      margin: 0;
+      white-space: pre-wrap;
+      word-break: break-word;
+      font-family: monospace;
+      font-size: 0.85rem;
+      color: white;
+    }
+    .code-block code{
+      font-family: 'Fira Code', 'Source Code Pro', monospace;
+      font-size: 0.85rem;
+      color: white;
+      background-color: transparent;
+    }
+    .copy-btn {
+      position: absolute;
+      top: 0px;
+      right: 0px;
+      background: #1e1e1e;
+      color: white;
+      border: none;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      z-index: 1;
+    }
+    .copy-btn:hover {
+      background: #cbd5e1;
+    }
+
+    pre {
+      background: #1e1e1e;
+      color: #f8f8f2;
+      padding: 0.75rem;
+      border-radius: 8px;
+      overflow-x: auto;
+    }
     textarea::-webkit-scrollbar-thumb {
       background-color: rgba(120, 14, 14, 0.3) !important;
       border-radius: 5px !important;

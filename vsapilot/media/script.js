@@ -1,42 +1,46 @@
 const vscode = acquireVsCodeApi();
-  function appendParsedMessage(rawText, role) {
-  const container = document.getElementById('chat-output');
+function appendParsedMessage(content, role) {
   const wrapper = document.createElement('div');
   wrapper.className = 'chat-bubble ' + role;
 
-  const parts = rawText.split(/```/);
-  
-  for (let i = 0; i < parts.length; i++) {
-    if (i % 2 === 0) {
+
+  const segments = content.split(/```/g);
+
+  segments.forEach((seg, idx) => {
+    if (idx % 2 === 0) {
       const p = document.createElement('p');
-      p.textContent = parts[i].trim();
+      p.textContent = seg.trim();
       wrapper.appendChild(p);
     } else {
+     
       const codeContainer = document.createElement('div');
       codeContainer.className = 'code-block';
 
       const copyBtn = document.createElement('button');
-      copyBtn.textContent = 'Copy';
       copyBtn.className = 'copy-btn';
+      copyBtn.innerText = '📋';
+      copyBtn.title = 'Copy to clipboard';
+
       copyBtn.onclick = () => {
-        navigator.clipboard.writeText(parts[i].trim());
-        copyBtn.textContent = 'Copied!';
-        setTimeout(() => copyBtn.textContent = 'Copy', 2000);
+        navigator.clipboard.writeText(seg.trim());
+        copyBtn.innerText = '✅';
+        setTimeout(() => (copyBtn.innerText = '📋'), 1500);
       };
 
       const pre = document.createElement('pre');
-      const code = document.createElement('code');
-      code.textContent = parts[i].trim();
-      pre.appendChild(code);
+      const codeElem = document.createElement('code');
+      codeElem.textContent = seg.trim();
 
+      pre.appendChild(codeElem);
       codeContainer.appendChild(copyBtn);
       codeContainer.appendChild(pre);
       wrapper.appendChild(codeContainer);
     }
-  }
+  });
 
-  container.appendChild(wrapper);
-  container.scrollTop = container.scrollHeight;
+  const chatOutput = document.getElementById('chat-output');
+  chatOutput.appendChild(wrapper);
+  chatOutput.scrollTop = chatOutput.scrollHeight;
 }
 
   function appendMessage(content, role) {

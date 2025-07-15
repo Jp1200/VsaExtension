@@ -7,6 +7,8 @@ export function getWindow(webview: vscode.Webview, extensionUri: vscode.Uri): st
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+
   <title>Chat window</title>
   <style>
     html, body {
@@ -108,6 +110,7 @@ export function getWindow(webview: vscode.Webview, extensionUri: vscode.Uri): st
       line-height: 1.4;
       white-space: pre-wrap;
       margin-bottom: 1rem;
+      font-size: 1rem;
     }
 
     .user {
@@ -124,20 +127,39 @@ export function getWindow(webview: vscode.Webview, extensionUri: vscode.Uri): st
 
     .code-block {
       position: relative;
+      background-color: #f4f4f5;
+      border-radius: 8px;
+      overflow-x: auto;
       margin-top: 0.5rem;
     }
 
+    .code-block pre {
+      margin: 0;
+      white-space: pre-wrap;
+      word-break: break-word;
+      font-family: monospace;
+      font-size: 0.85rem;
+      color: white;
+    }
+    .code-block code{
+      font-family: 'Fira Code', 'Source Code Pro', monospace;
+      font-size: 0.85rem;
+      color: white;
+      background-color: transparent;
+    }
     .copy-btn {
-      float: right;
-      margin-bottom: 4px;
-      background: #e2e8f0;
+      position: absolute;
+      top: 0px;
+      right: 0px;
+      background: #1e1e1e;
+      color: white;
       border: none;
       padding: 4px 8px;
-      font-size: 0.7rem;
-      cursor: pointer;
       border-radius: 4px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      z-index: 1;
     }
-
     .copy-btn:hover {
       background: #cbd5e1;
     }
