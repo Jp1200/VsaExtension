@@ -51,7 +51,7 @@ export function activate(context: vscode.ExtensionContext) {
 async function getAIResponse(userMessage: string, context: vscode.ExtensionContext): Promise<string> {
 	const apiKey = await context.secrets.get('openrouterApiKey');
 	if (!apiKey) {
-    	vscode.window.showErrorMessage('API key not found. Please run "VSA: Set API Key".');
+    	vscode.window.showErrorMessage('API key not found. Please run "Visa UI: Set API Key".');
     	return 'API key missing.';
   	}
 	const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
