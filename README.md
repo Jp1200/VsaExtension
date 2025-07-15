@@ -53,7 +53,7 @@ I used **[OpenRouter.ai](https://openrouter.ai/)** for real-time API access:
 - Save chats locally for persistence  
 - Adaptive themes based on VSCode settings  
 - Light/Dark mode toggle 🌗  
-
+- Persistence
 ---
 
 ## 🧰 Getting Started
@@ -82,7 +82,11 @@ Then select:
 
     Visa UI: Set API Key → 🔐 Saves your OpenRouter API key securely
 
+## Preview
 
+Here's how the chat interface and AI response look inside VS Code:
+
+![VSAPilot Demo](vsapilot/assets/demo.gif)
 
 # Non summarized README
 Vscode Extension for Visa take home assignment.
