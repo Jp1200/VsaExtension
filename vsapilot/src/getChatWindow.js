@@ -147,8 +147,16 @@ function getWindow(webview, extensionUri) {
       white-space: pre-wrap;
       margin-bottom: 1rem;
       font-size: 1rem;
+      opacity: 0;
+      transform: translateY(10px);
+      animation: fadeInUp 0.3s ease forwards;
     }
-
+    @keyframes fadeInUp{
+       to{
+        opacity:1;
+        transform:translateY(0);
+       }
+    }
     .user {
       align-self: flex-end;
       background-color: #dbeafe;
@@ -180,8 +188,11 @@ function getWindow(webview, extensionUri) {
     .code-block code{
       font-family: 'Fira Code', 'Source Code Pro', monospace;
       font-size: 0.85rem;
+      line-height: 1.4;
       color: white;
       background-color: transparent;
+      display: block;
+      white-space: pre-wrap;
     }
     .copy-btn {
       position: absolute;

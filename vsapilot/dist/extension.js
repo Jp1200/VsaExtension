@@ -317,8 +317,11 @@ function getWindow(webview, extensionUri) {
     .code-block code{
       font-family: 'Fira Code', 'Source Code Pro', monospace;
       font-size: 0.85rem;
+      line-height: 1.4;
       color: white;
       background-color: transparent;
+      display: block;
+      white-space: pre-wrap;
     }
     .copy-btn {
       position: absolute;

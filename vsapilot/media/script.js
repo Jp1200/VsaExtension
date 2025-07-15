@@ -29,9 +29,9 @@ function appendParsedMessage(content, role) {
 
       const pre = document.createElement('pre');
       const codeElem = document.createElement('code');
-      codeElem.textContent = seg.trim();
-
       pre.appendChild(codeElem);
+      typeCodeBlock(seg.trim(), codeElem);
+
       codeContainer.appendChild(copyBtn);
       codeContainer.appendChild(pre);
       wrapper.appendChild(codeContainer);
@@ -42,7 +42,21 @@ function appendParsedMessage(content, role) {
   chatOutput.appendChild(wrapper);
   chatOutput.scrollTop = chatOutput.scrollHeight;
 }
+function typeCodeBlock(text, targetElement, callback) {
+  let index = 0;
 
+  function type() {
+    if (index < text.length) {
+      targetElement.textContent += text.charAt(index++);
+      targetElement.parentElement.scrollTop = targetElement.parentElement.scrollHeight;
+      requestAnimationFrame(type);
+    } else if (callback) {
+      callback();
+    }
+  }
+
+  type();
+}
   function appendMessage(content, role) {
     const bubble = document.createElement('div');
     const chatOutput = document.getElementById('chat-output');
