@@ -14,3 +14,20 @@ Assumptions/shortcuts:
   and configuring the vscode extensions weird props and arguments needed to communicate with the webview and other defined functions.
   I used AI sources to build the styling and HTML and assisting in the UX portion of the extension. I think with a solid backbone its easier to parse what indivudalistic styling 
   decisions I can make later and focus more on the scripting and functionality. 
+
+Direction:
+  I wanted an actual API response instead of using mocks so I researched free API endpoints I could use for testing and full realization capabilities. I found Openrouter ->
+  https://openrouter.ai/ and could easily make an account with my google account and started using a very old model with low cost per request with an easy to get API key. 
+  Followed their documentation for fetch requests and set my model as 'https://openrouter.ai/openai/gpt-3.5-turbo-0613' which is a very old openai model (respectively).
+  In a future interation this could use a higher order model or even have a dropdown menu where you can select between different models (using same API key) or even using a locally hosted model
+  on a separate machine on your local network. Or even a very lightweight model on your own computer. If I had more time I think saving chats locally wouldve been something I put time into getting to work.
+  Also in terms of Ui/UX I would've liked to add "light mode/dark mode" for the people who don't want to destroy their eyes or at the very least something that adopts the theme of the users vscode fully.
+
+INSTRUCTIONS:
+  1: Clone the repo to your computer 
+  2: npm install in the main directory ~/VsaExtension/vsapilot 
+  3: open vscode -> code .
+  4: press F5 to open debug mode on the vscode extension
+  Commands for the extension Cmd/ctrl + shift + P ->
+    1: "Visa UI Chatbot" -> Will open the chat window to the side
+    2: "Visa UI: Set API Key" -> opens a window to copy and paste your own OpenRouter APIKEY into which will save it to your vscodes context secrets safely. 
