@@ -111,8 +111,16 @@ export function getWindow(webview: vscode.Webview, extensionUri: vscode.Uri): st
       white-space: pre-wrap;
       margin-bottom: 1rem;
       font-size: 1rem;
+      opacity: 0;
+      transform: translateY(10px);
+      animation: fadeInUp 0.3s ease forwards;
     }
-
+    @keyframes fadeInUp{
+       to{
+        opacity:1;
+        transform:translateY(0);
+       }
+    }
     .user {
       align-self: flex-end;
       background-color: #dbeafe;
