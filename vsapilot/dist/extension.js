@@ -103,7 +103,7 @@ async function getAIResponse(userMessage, context) {
         console.error('OpenRouter Error:', response.status);
         const errorText = await response.text();
         console.error(errorText);
-        return `There was an error from OpenRouter \n ${errorText} \n ${response.status === 401 ?
+        return `There was an error from OpenRouter \n ${response.status === 401 ?
             'Missing OpenRouter API Key -> Open command palette (Ctrl/Cmd+Shift+P) and type: Visa UI: Set API Key'
             : response.status}`;
     }
