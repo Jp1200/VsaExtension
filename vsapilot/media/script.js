@@ -1,4 +1,43 @@
 const vscode = acquireVsCodeApi();
+  function appendParsedMessage(rawText, role) {
+  const container = document.getElementById('chat-output');
+  const wrapper = document.createElement('div');
+  wrapper.className = 'chat-bubble ' + role;
+
+  const parts = rawText.split(/```/);
+  
+  for (let i = 0; i < parts.length; i++) {
+    if (i % 2 === 0) {
+      const p = document.createElement('p');
+      p.textContent = parts[i].trim();
+      wrapper.appendChild(p);
+    } else {
+      const codeContainer = document.createElement('div');
+      codeContainer.className = 'code-block';
+
+      const copyBtn = document.createElement('button');
+      copyBtn.textContent = 'Copy';
+      copyBtn.className = 'copy-btn';
+      copyBtn.onclick = () => {
+        navigator.clipboard.writeText(parts[i].trim());
+        copyBtn.textContent = 'Copied!';
+        setTimeout(() => copyBtn.textContent = 'Copy', 2000);
+      };
+
+      const pre = document.createElement('pre');
+      const code = document.createElement('code');
+      code.textContent = parts[i].trim();
+      pre.appendChild(code);
+
+      codeContainer.appendChild(copyBtn);
+      codeContainer.appendChild(pre);
+      wrapper.appendChild(codeContainer);
+    }
+  }
+
+  container.appendChild(wrapper);
+  container.scrollTop = container.scrollHeight;
+}
 
   function appendMessage(content, role) {
     const bubble = document.createElement('div');
@@ -25,7 +64,7 @@ const vscode = acquireVsCodeApi();
 window.addEventListener('message', event => {
   const msg = event.data;
   if (msg.type === 'botReply') {
-    appendMessage(msg.payload, 'assistant');
+    appendParsedMessage(msg.payload, 'assistant');
   }
 });
 
