@@ -36,11 +36,13 @@ function appendParsedMessage(content, role) {
       codeContainer.appendChild(pre);
       wrapper.appendChild(codeContainer);
     }
+    
   });
 
   const chatOutput = document.getElementById('chat-output');
   chatOutput.appendChild(wrapper);
   chatOutput.scrollTop = chatOutput.scrollHeight;
+  
 }
 function typeCodeBlock(text, targetElement, callback) {
   let index = 0;
